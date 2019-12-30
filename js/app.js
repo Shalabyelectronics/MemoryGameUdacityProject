@@ -16,8 +16,12 @@ shuffle(icons);
 cards.forEach(card => {
   card.children[0].className = icons[sympole];
   sympole++;
+  card.addEventListener("click", openCards);
 });
-
+//we need to add event listeners to our cards
+function openCards() {
+  this.classList.add("open", "show");
+}
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
