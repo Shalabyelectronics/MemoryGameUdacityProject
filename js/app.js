@@ -2,6 +2,13 @@
  * Create a list that holds all of your cards
  */
 const cards = document.querySelectorAll(".card");
+let icons = [];
+
+//we need to save all sympols we have in our cards inside icons array.
+cards.forEach(card => {
+  let icon = card.children[0].className;
+  icons.push(icon);
+});
 
 /*
  * Display the cards on the page
