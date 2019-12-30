@@ -3,11 +3,19 @@
  */
 const cards = document.querySelectorAll(".card");
 let icons = [];
+let sympole = 0;
 
 //we need to save all sympols we have in our cards inside icons array.
 cards.forEach(card => {
   let icon = card.children[0].className;
   icons.push(icon);
+});
+
+//we need to add the icons to our cards after shaffling all of them
+shuffle(icons);
+cards.forEach(card => {
+  card.children[0].className = icons[sympole];
+  sympole++;
 });
 
 /*
