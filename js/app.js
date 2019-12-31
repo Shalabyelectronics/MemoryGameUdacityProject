@@ -4,6 +4,7 @@
 const cards = document.querySelectorAll(".card");
 let icons = [];
 let sympole = 0;
+let flippedCards = [];
 
 //we need to save all sympols we have in our cards inside icons array.
 cards.forEach(card => {
@@ -16,11 +17,35 @@ shuffle(icons);
 cards.forEach(card => {
   card.children[0].className = icons[sympole];
   sympole++;
-  card.addEventListener("click", openCards);
+  card.addEventListener("click", flipcards);
 });
 //we need to add event listeners to our cards
-function openCards() {
-  this.classList.add("open", "show");
+function flipcards() {
+  if (flippedCards.length < 2) {
+    this.classList.add("open", "show", "disable");
+    flippedCards.push(this);
+    if (flippedCards.length == 2) {
+      setTimeout(compareCards, 1000);
+    }
+    // if (firstCardIcon == secondCardIcon) {
+    //   firstCard.classList.add("match");
+    //   secondCard.classList.add("match");
+    // }
+  }
+}
+function compareCards() {
+  let firstCard = flippedCards[0];
+  let secondCard = flippedCards[1];
+  let firstCardIcon = firstCard.children[0].className;
+  let secondCardIcon = secondCard.children[0].className;
+  if (firstCardIcon == secondCardIcon) {
+    firstCard.classList.add("match");
+    secondCard.classList.add("match");
+  } else {
+    firstCard.classList.remove("open", "show", "disable");
+    secondCard.classList.remove("open", "show", "disable");
+  }
+  flippedCards = [];
 }
 /*
  * Display the cards on the page
