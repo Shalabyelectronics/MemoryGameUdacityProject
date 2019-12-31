@@ -7,9 +7,11 @@ let sympole = 0;
 let flippedCards = [];
 let matchedCards = 0;
 let moves = 0;
+let stars = 3;
 
 function startGame() {
   cardsShuffling();
+  restGame();
 }
 
 startGame();
@@ -56,6 +58,7 @@ function compareCards() {
   flippedCards = [];
   moves++;
   counter();
+  starsScore();
   endGame();
 }
 
@@ -64,10 +67,33 @@ function counter() {
   updateMoves.innerText = moves;
 }
 
+function starsScore() {
+  let starsBar = document.querySelector(".stars");
+  if (moves < 5) {
+    console.log("you have three stars untile now");
+  }
+  if (moves >= 5 && moves < 10) {
+    console.log("you have 2 stars");
+    starsBar.removeChild(starsBar.childNodes[0]);
+  } else if (moves >= 10) {
+    console.log("fuck you");
+    starsBar.removeChild(starsBar.childNodes[1]);
+  } else {
+    console.log("nothing lift");
+  }
+}
+
 function endGame() {
   if (matchedCards == 8) {
     alert("Game is finished");
   }
+}
+
+function restGame() {
+  let restBtn = document.querySelector(".restart");
+  restBtn.addEventListener("click", function() {
+    console.log("do restart");
+  });
 }
 
 /*
