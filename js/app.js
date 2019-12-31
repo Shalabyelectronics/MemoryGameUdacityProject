@@ -5,21 +5,31 @@ const cards = document.querySelectorAll(".card");
 let icons = [];
 let sympole = 0;
 let flippedCards = [];
+let matchedCards = 0;
 let moves = 0;
 
-//we need to save all sympols we have in our cards inside icons array.
-cards.forEach(card => {
-  let icon = card.children[0].className;
-  icons.push(icon);
-});
+function startGame() {
+  cardsShuffling();
+}
 
-//we need to add the icons to our cards after shaffling all of them
-shuffle(icons);
-cards.forEach(card => {
-  card.children[0].className = icons[sympole];
-  sympole++;
-  card.addEventListener("click", flipcards);
-});
+startGame();
+
+function cardsShuffling() {
+  //we need to save all sympols we have in our cards inside icons array.
+  cards.forEach(card => {
+    let icon = card.children[0].className;
+    icons.push(icon);
+  });
+
+  //we need to add the icons to our cards after shaffling all of them
+  shuffle(icons);
+  cards.forEach(card => {
+    card.children[0].className = icons[sympole];
+    sympole++;
+    card.addEventListener("click", flipcards);
+  });
+}
+
 //we need to add event listeners to our cards
 function flipcards() {
   if (flippedCards.length < 2) {
@@ -38,6 +48,7 @@ function compareCards() {
   if (firstCardIcon == secondCardIcon) {
     firstCard.classList.add("match");
     secondCard.classList.add("match");
+    matchedCards++;
   } else {
     firstCard.classList.remove("open", "show", "disable");
     secondCard.classList.remove("open", "show", "disable");
@@ -45,11 +56,18 @@ function compareCards() {
   flippedCards = [];
   moves++;
   counter();
+  endGame();
 }
 
 function counter() {
   updateMoves = document.querySelector(".moves");
   updateMoves.innerText = moves;
+}
+
+function endGame() {
+  if (matchedCards == 8) {
+    alert("Game is finished");
+  }
 }
 
 /*
