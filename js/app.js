@@ -5,6 +5,7 @@ const cards = document.querySelectorAll(".card");
 let icons = [];
 let sympole = 0;
 let flippedCards = [];
+let moves = 0;
 
 //we need to save all sympols we have in our cards inside icons array.
 cards.forEach(card => {
@@ -27,10 +28,6 @@ function flipcards() {
     if (flippedCards.length == 2) {
       setTimeout(compareCards, 1000);
     }
-    // if (firstCardIcon == secondCardIcon) {
-    //   firstCard.classList.add("match");
-    //   secondCard.classList.add("match");
-    // }
   }
 }
 function compareCards() {
@@ -46,7 +43,15 @@ function compareCards() {
     secondCard.classList.remove("open", "show", "disable");
   }
   flippedCards = [];
+  moves++;
+  counter();
 }
+
+function counter() {
+  updateMoves = document.querySelector(".moves");
+  updateMoves.innerText = moves;
+}
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
