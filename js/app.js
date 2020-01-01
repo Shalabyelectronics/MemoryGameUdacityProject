@@ -66,21 +66,27 @@ function counter() {
   updateMoves = document.querySelector(".moves");
   updateMoves.innerText = moves;
 }
+function updateStars() {
+  const starsBar = document.querySelector(".stars");
+  starsBar.innerHTML = "";
+  for (let i = 0; i < star; i++) {
+    let addStar = "<li><i class='fa fa-star'></i></li>";
+    starsBar.innerHTML += addStar;
+  }
+}
 
 function starsScore() {
-  let starsBar = document.querySelector(".stars");
-  if (moves < 5) {
-    console.log("you have three stars untile now");
-  }
-  if (moves >= 5 && moves < 10) {
-    console.log("you have 2 stars");
-    starsBar.removeChild(starsBar.childNodes[0]);
-  } else if (moves >= 10) {
-    console.log("fuck you");
-    starsBar.removeChild(starsBar.childNodes[1]);
+  if (moves < 6) {
+    star = 3;
+    console.log(`you have ${star} stars`);
+  } else if (moves < 10) {
+    star = 2;
+    console.log(`you have ${star} stars`);
   } else {
-    console.log("nothing lift");
+    star = 1;
+    console.log(`you have ${star} stars`);
   }
+  updateStars();
 }
 
 function endGame() {
