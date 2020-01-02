@@ -9,6 +9,7 @@ const restBtn = document.querySelector(".restart");
 const updateMoves = document.querySelector(".moves");
 const showMoves = document.querySelector(".your-moves");
 const starsBar = document.querySelector(".stars");
+const timer = document.querySelector(".timer");
 let icons = [];
 let sympole = 0;
 let flippedCards = [];
