@@ -2,6 +2,13 @@
  * Create a list that holds all of your cards
  */
 const cards = document.querySelectorAll(".card");
+const dialogBox = document.querySelector(".dialog-box");
+const closeDialog = document.querySelector(".close-btn");
+const playAgain = document.querySelector(".rst-btn");
+const restBtn = document.querySelector(".restart");
+const updateMoves = document.querySelector(".moves");
+const showMoves = document.querySelector(".your-moves");
+const starsBar = document.querySelector(".stars");
 let icons = [];
 let sympole = 0;
 let flippedCards = [];
@@ -10,8 +17,10 @@ let moves = 0;
 let stars = 3;
 
 function startGame() {
+  closeDialogBox();
+  clearValues();
+  faceDownCards();
   cardsShuffling();
-  restGame();
 }
 
 startGame();
@@ -42,6 +51,11 @@ function flipcards() {
     }
   }
 }
+function faceDownCards() {
+  cards.forEach(card => {
+    card.className = "card";
+  });
+}
 function compareCards() {
   let firstCard = flippedCards[0];
   let secondCard = flippedCards[1];
@@ -63,13 +77,11 @@ function compareCards() {
 }
 
 function counter() {
-  updateMoves = document.querySelector(".moves");
   updateMoves.innerText = moves;
 }
 function updateStars() {
-  const starsBar = document.querySelector(".stars");
   starsBar.innerHTML = "";
-  for (let i = 0; i < star; i++) {
+  for (let i = 0; i < stars; i++) {
     let addStar = "<li><i class='fa fa-star'></i></li>";
     starsBar.innerHTML += addStar;
   }
@@ -77,29 +89,48 @@ function updateStars() {
 
 function starsScore() {
   if (moves < 6) {
-    star = 3;
-    console.log(`you have ${star} stars`);
+    stars = 3;
+    console.log(`you have ${stars} stars`);
   } else if (moves < 10) {
-    star = 2;
-    console.log(`you have ${star} stars`);
+    stars = 2;
+    console.log(`you have ${stars} stars`);
   } else {
-    star = 1;
-    console.log(`you have ${star} stars`);
+    stars = 1;
+    console.log(`you have ${stars} stars`);
   }
   updateStars();
 }
 
 function endGame() {
-  if (matchedCards == 8) {
-    alert("Game is finished");
+  if (matchedCards == 1) {
+    showDailogBox();
   }
+  closeDialog.addEventListener("click", closeDialogBox);
+  playAgain.addEventListener("click", startGame);
 }
 
 function restGame() {
-  let restBtn = document.querySelector(".restart");
-  restBtn.addEventListener("click", function() {
-    console.log("do restart");
-  });
+  restBtn.addEventListener("click", startGame);
+}
+
+function showDailogBox() {
+  dialogBox.showModal();
+  showMoves.innerText = `Your Moves : ${moves}`;
+}
+
+function closeDialogBox() {
+  dialogBox.close();
+}
+
+function clearValues() {
+  moves = 0;
+  stars = 3;
+  matchedCards = 0;
+  sympole = 0;
+  icons = [];
+  flippedCards = [];
+  updateMoves.innerText = moves;
+  updateStars();
 }
 
 /*
