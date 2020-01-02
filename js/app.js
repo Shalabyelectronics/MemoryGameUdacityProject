@@ -21,6 +21,7 @@ function startGame() {
   clearValues();
   faceDownCards();
   cardsShuffling();
+  restGame();
 }
 
 startGame();
