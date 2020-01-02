@@ -1,34 +1,41 @@
-/*
- * Create a list that holds all of your cards
- */
+//Get HTML elements
+//const cards hold all cards classes inside an array
 const cards = document.querySelectorAll(".card");
+// const dialog select dialog box element
 const dialogBox = document.querySelector(".dialog-box");
+//const closeDialog hold close button element inside dialogbox
 const closeDialog = document.querySelector(".close-btn");
+//const playAgian hold playAgain button
 const playAgain = document.querySelector(".rst-btn");
+//const restBtn hold restart button element
 const restBtn = document.querySelector(".restart");
+//const updateMoves holds Moves element
 const updateMoves = document.querySelector(".moves");
+//const showMoves holds show moves element in dialogbox
 const showMoves = document.querySelector(".your-moves");
+const numberOfStars = document.querySelector(".stars-num");
+//const timeSpent holds player time spent playing the game in dailogbox
 const timeSpent = document.querySelector(".time-spent");
+// const starBar hold StarsBar elements
 const starsBar = document.querySelector(".stars");
+//const showTimer hold the timer element
 const showTimer = document.querySelector(".timer");
-let icons = [];
-let sympole = 0;
-let flippedCards = [];
-let matchedCards = 0;
-let moves = 0;
-let stars = 3;
-let timer = null;
-let now = 0;
+
+let icons = []; // holds all my icons classes
+let symbol = 0; //for shuffling cards
+let flippedCards = []; //to holds the flipped card
+let matchedCards = 0; //to holds the matched cards
+let moves = 0; //to holds the moves player did each two cards opened add+1
+let stars = 3; //to holds numbers of stars
+let timer = null; //to hold my interVal function
+let now = 0; //current timer
 let mins, secs;
 
 function startGame() {
-  closeDialogBox();
-  clearValues();
-  faceDownCards();
-  cardsShuffling();
-  timerByFirstCard();
-  restGame();
-  resetTimer();
+  clearValues(); // to clear all Values
+  cardsShuffling(); //to shuffling my cards
+  timerByFirstCard(); //timer start when flip a crad
+  restartBtn(); //restart button
 }
 
 startGame();
@@ -43,8 +50,8 @@ function cardsShuffling() {
   //we need to add the icons to our cards after shaffling all of them
   shuffle(icons);
   cards.forEach(card => {
-    card.children[0].className = icons[sympole];
-    sympole++;
+    card.children[0].className = icons[symbol];
+    symbol++;
     card.addEventListener("click", flipcards);
   });
 }
@@ -96,21 +103,18 @@ function updateStars() {
 }
 
 function starsScore() {
-  if (moves < 6) {
+  if (moves < 15) {
     stars = 3;
-    console.log(`you have ${stars} stars`);
-  } else if (moves < 10) {
+  } else if (moves < 20) {
     stars = 2;
-    console.log(`you have ${stars} stars`);
   } else {
     stars = 1;
-    console.log(`you have ${stars} stars`);
   }
   updateStars();
 }
 
 function endGame() {
-  if (matchedCards == 1) {
+  if (matchedCards == 8) {
     showDailogBox();
     stopTimer();
   }
@@ -118,14 +122,15 @@ function endGame() {
   playAgain.addEventListener("click", startGame);
 }
 
-function restGame() {
+function restartBtn() {
   restBtn.addEventListener("click", startGame);
 }
 
 function showDailogBox() {
   dialogBox.showModal();
   showMoves.innerText = `Your Moves : ${moves}`;
-  timeSpent.innerText = `You spent ${mins}:${secs}`;
+  timeSpent.innerText = `You spent ${mins}:${secs} of time.`;
+  numberOfStars.innerText = `You got ${stars} of stars`;
 }
 
 function closeDialogBox() {
@@ -136,11 +141,13 @@ function clearValues() {
   moves = 0;
   stars = 3;
   matchedCards = 0;
-  sympole = 0;
+  symbol = 0;
   icons = [];
   flippedCards = [];
   updateMoves.innerText = moves;
   updateStars();
+  faceDownCards();
+  resetTimer();
 }
 
 function tick() {
