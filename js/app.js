@@ -8,21 +8,27 @@ const playAgain = document.querySelector(".rst-btn");
 const restBtn = document.querySelector(".restart");
 const updateMoves = document.querySelector(".moves");
 const showMoves = document.querySelector(".your-moves");
+const timeSpent = document.querySelector(".time-spent");
 const starsBar = document.querySelector(".stars");
-const timer = document.querySelector(".timer");
+const showTimer = document.querySelector(".timer");
 let icons = [];
 let sympole = 0;
 let flippedCards = [];
 let matchedCards = 0;
 let moves = 0;
 let stars = 3;
+let timer = null;
+let now = 0;
+let mins, secs;
 
 function startGame() {
   closeDialogBox();
   clearValues();
   faceDownCards();
   cardsShuffling();
+  timerByFirstCard();
   restGame();
+  resetTimer();
 }
 
 startGame();
@@ -106,6 +112,7 @@ function starsScore() {
 function endGame() {
   if (matchedCards == 1) {
     showDailogBox();
+    stopTimer();
   }
   closeDialog.addEventListener("click", closeDialogBox);
   playAgain.addEventListener("click", startGame);
@@ -118,6 +125,7 @@ function restGame() {
 function showDailogBox() {
   dialogBox.showModal();
   showMoves.innerText = `Your Moves : ${moves}`;
+  timeSpent.innerText = `You spent ${mins}:${secs}`;
 }
 
 function closeDialogBox() {
@@ -135,6 +143,45 @@ function clearValues() {
   updateStars();
 }
 
+function tick() {
+  //tick() update display if player click on card so time will start
+  now++;
+  let remain = now;
+  mins = Math.floor(remain / 60);
+  remain -= mins * 60;
+  secs = remain;
+  //update the display timer
+  if (mins < 10) {
+    mins = "0" + mins;
+  }
+  if (secs < 10) {
+    secs = "0" + secs;
+  }
+  showTimer.innerHTML = mins + ":" + secs;
+}
+function startTimer() {
+  //start the timer
+  timer = setInterval(tick, 1000);
+  cards.forEach(card => {
+    card.removeEventListener("click", startTimer);
+  });
+}
+function timerByFirstCard() {
+  cards.forEach(card => {
+    card.addEventListener("click", startTimer);
+  });
+}
+function stopTimer() {
+  clearInterval(timer);
+  timer = null;
+}
+function resetTimer() {
+  if (timer != null) {
+    stopTimer();
+  }
+  now = -1;
+  tick();
+}
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
