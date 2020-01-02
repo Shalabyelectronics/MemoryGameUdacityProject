@@ -123,3 +123,7 @@ h1 {
 .dialog-box {
   border-radius: 40px;
 }
+.timer {
+  display: inline;
+  margin-left: 30px;
+}
