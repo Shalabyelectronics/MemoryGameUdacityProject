@@ -147,6 +147,7 @@
     flippedCards = [];
     updateMoves.innerText = moves;
     updateStars();
+    closeDialogBox();
     faceDownCards();
     resetTimer();
   }
